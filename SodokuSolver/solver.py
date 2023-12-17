@@ -1,4 +1,5 @@
-board = [
+
+sample_board = [
     [7, 8, 0, 4, 0, 0, 1, 2, 0],
     [6, 0, 0, 0, 7, 5, 0, 0, 9],
     [0, 0, 0, 6, 0, 1, 0, 7, 8],
@@ -10,6 +11,8 @@ board = [
     [0, 4, 9, 2, 0, 6, 0, 0, 7]
 ]
 
+BOARD_SIZE = 9
+
 
 def solve(bo):
     find = find_empty(bo)
@@ -20,7 +23,7 @@ def solve(bo):
     else:
         row, col = find
 
-    for i in range(1, 10):
+    for i in range(1, BOARD_SIZE + 1):
         if valid(bo, i, (row, col)):
             bo[row][col] = i
 
@@ -32,10 +35,43 @@ def solve(bo):
 
     return False
 
+# def solve(bo):
+#     stack = []
+#     pos = find_empty(bo)
+#
+#     if not pos:
+#         return True  # Board is already complete
+#
+#     stack.append((pos, 0))  # Initial position and starting number
+#
+#     while stack:
+#         (row, col), num = stack.pop()
+#
+#         if num != 0:  # If backtracking, reset current cell to 0 before trying next number
+#             bo[row][col] = 0
+#
+#         for i in range(num + 1, 10):  # Start from the next number after the current num
+#             if valid(bo, i, (row, col)):
+#                 bo[row][col] = i
+#                 next_pos = find_empty(bo)
+#
+#                 if not next_pos:  # Solution found
+#                     return True
+#
+#                 stack.append(((row, col), i))  # Push current position and number
+#                 stack.append((next_pos, 0))   # Push next position and start number
+#                 break
+#         else:
+#             # No valid number found, continue to backtrack
+#             continue
+#
+#     return False
+
 
 # Check to see if placing a number at a certain position on the board is valid
 # pos - tuple; pos[0] = row index; pos[1] = column index
 def valid(bo, num, pos):
+
     # check row
     for i in range(len(bo[0])):
         # check to see if number already present in row but ignore current pos
@@ -85,7 +121,7 @@ def find_empty(bo):
 
     return None
 
-print_board(board)
-solve(board)
+print_board(sample_board)
+solve(sample_board)
 print("_________________________")
-print_board(board)
+print_board(sample_board)
